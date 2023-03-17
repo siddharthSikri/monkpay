@@ -23,4 +23,6 @@ public interface InvoiceService {
      * @return Generic response object.
      */
     GenericResponse createInvoice(Integer count);
+
+    GenericResponse deleteInvoice(String invoiceId);
 }

@@ -6,6 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Invoice collection repository class.
@@ -27,4 +28,12 @@ public interface InvoiceRepo extends CrudRepository<Invoice, String> {
      * @return List of invoices.
      */
     List<Invoice> findAllByPaymentStatus(PaymentStatus paymentStatus);
+
+    /**
+     * Fetch invoice by unique invoice identifier.
+     *
+     * @param invoiceId Invoice identifier.
+     * @return Invoice object.
+     */
+    Optional<Invoice> findById(String invoiceId);
 }

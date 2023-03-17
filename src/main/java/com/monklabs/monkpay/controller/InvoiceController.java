@@ -5,10 +5,7 @@ import com.monklabs.monkpay.pojo.response.GenericResponse;
 import com.monklabs.monkpay.pojo.response.Invoices;
 import com.monklabs.monkpay.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Invoice controller class consisting of all Invoice related APIs.
@@ -40,5 +37,17 @@ public class InvoiceController {
     public GenericResponse createInvoice(
             @RequestParam(name = "count", required = false) Integer count) {
         return invoiceService.createInvoice(count);
+    }
+
+    /**
+     * Delete an invoice based on invoice identifier or delete all invoices.
+     *
+     * @param invoiceId
+     * @return Generic response object.
+     */
+    @DeleteMapping("/invoice")
+    public GenericResponse deleteInvoice(
+            @RequestParam(name = "invoice_id", required = false) String invoiceId) {
+        return invoiceService.deleteInvoice(invoiceId);
     }
 }

@@ -9,10 +9,12 @@ import com.monklabs.monkpay.repository.InvoiceRepo;
 import com.monklabs.monkpay.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Invoice service implementation class.
@@ -62,5 +64,26 @@ public class InvoiceServiceImpl implements InvoiceService {
     public GenericResponse createInvoice(Integer count) {
         helper.createInvoicesAndSaveToDb(count);
         return helper.createAndPopulateGenericResponse(true, "Invoice/s created successfully!", count);
+    }
+
+    /**
+     * Delete invoice based on invoice identifier or delete all invoices from the database.
+     *
+     * @param invoiceId Invoice identifier.
+     * @return Generic response object.
+     */
+
+    @Override
+    public GenericResponse deleteInvoice(String invoiceId) {
+        if (StringUtils.hasLength(invoiceId)) {
+            Optional<Invoice> invoiceOpt = invoiceRepo.findById(invoiceId);
+            if (invoiceOpt.isPresent()) {
+                Invoice invoice = invoiceOpt.get();
+                invoiceRepo.delete(invoice);
+            } else {
+                invoiceRepo.deleteAll();
+            }
+        }
+        return helper.createAndPopulateGenericResponse(true, "Invoice/s deleted successfully!", null);
     }
 }
