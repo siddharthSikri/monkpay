@@ -30,10 +30,13 @@ public class Helper {
                 for (int i = 0; i < count; i++) {
                     String[] itemAndPrice = getItemAndPrice();
                     Double price = Double.valueOf(itemAndPrice[1]);
+                    Long currentTime = System.currentTimeMillis();
                     Invoice invoice = Invoice.builder()
                             .item(itemAndPrice[0])
                             .amount(price)
                             .paymentStatus(PaymentStatus.PENDING)
+                            .created(currentTime)
+                            .updated(currentTime)
                             .build();
                     invoiceRepo.save(invoice);
                 }

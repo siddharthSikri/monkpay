@@ -36,4 +36,13 @@ public interface InvoiceRepo extends CrudRepository<Invoice, String> {
      * @return Invoice object.
      */
     Optional<Invoice> findById(String invoiceId);
+
+    /**
+     * Fetch invoice by payment request id.
+     *
+     * @param paymentRequestId
+     * @return Invoice details.
+     */
+    Invoice findByPaymentDetails_IdIn(String paymentRequestId);
+
 }
